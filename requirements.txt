@@ -1,7 +1,6 @@
 Flask
-Flask-SQLAlchemy
 Flask-Login
-python-dotenv
+Flask-SQLAlchemy
 boto3
-Authlib
+python-dotenv
 Werkzeug
