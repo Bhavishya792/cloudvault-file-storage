@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Share File</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h1>
+
+            Secure Share Link
+
+        </h1>
+
+        <p>
+
+            This link expires in 1 hour.
+
+        </p>
+
+        <input
+            type="text"
+            id="shareLink"
+            value="{{ share_url }}"
+            readonly
+            class="form-input"
+        >
+
+        <br>
+
+        <button
+            onclick="copyLink()"
+        >
+
+            Copy Link
+
+        </button>
+
+        <br><br>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            style="
+            color:var(--cyan);
+            "
+        >
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function copyLink(){
+
+    const link =
+    document.getElementById(
+        "shareLink"
+    )
+
+    navigator.clipboard.writeText(
+        link.value
+    )
+
+    alert(
+        "Link copied!"
+    )
+
+}
+
+</script>
+
+</body>
+
+</html>

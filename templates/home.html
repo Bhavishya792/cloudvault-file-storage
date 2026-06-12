@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>CloudVault</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- NAVBAR -->
+
+        <nav class="topbar">
+
+            <div>
+
+                <h1>
+                    CloudVault
+                </h1>
+
+                <p class="tagline">
+                    Versioned Cloud Storage
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('login') }}" class="logout-btn">
+                Login
+            </a>
+
+        </nav>
+
+        <!-- HERO -->
+
+        <section style="
+        text-align:center;
+        padding:80px 0 60px;
+        ">
+
+            <div style="
+            display:inline-block;
+            padding:8px 16px;
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:999px;
+            margin-bottom:25px;
+            color:var(--muted);
+            ">
+
+                AWS S3 Powered File Management
+
+            </div>
+
+            <h1 style="
+            font-size:4.5rem;
+            max-width:900px;
+            margin:auto;
+            line-height:1.1;
+            margin-bottom:25px;
+            ">
+
+                Manage File Versions
+                Without Losing Control
+
+            </h1>
+
+            <p style="
+            max-width:750px;
+            margin:auto;
+            color:var(--muted);
+            font-size:1.15rem;
+            line-height:1.8;
+            margin-bottom:40px;
+            ">
+
+                CloudVault stores files securely on AWS S3,
+                automatically tracks versions,
+                and generates secure sharing links
+                so every revision remains accessible.
+
+            </p>
+
+            <div style="
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            flex-wrap:wrap;
+            ">
+
+                <a href="{{ url_for('register') }}" class="hero-btn-primary">
+                    Get Started
+                </a>
+
+                <a href="{{ url_for('login') }}" class="hero-btn-secondary">
+                    Login
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- HOW IT WORKS -->
+
+        <section style="
+        margin-bottom:70px;
+        ">
+
+            <h2 style="
+            text-align:center;
+            margin-bottom:40px;
+            ">
+                How It Works
+            </h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+
+                        01
+
+                    </div>
+
+                    <h3>
+
+                        Upload
+
+                    </h3>
+
+                    <p>
+
+                        Upload files directly to AWS S3.
+
+                    </p>
+
+                </div>
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+
+                        02
+
+                    </div>
+
+                    <h3>
+
+                        Version
+
+                    </h3>
+
+                    <p>
+
+                        Every upload automatically creates
+                        a new version.
+
+                    </p>
+
+                </div>
+
+                <div class="feature-card">
+
+                    <div class="feature-number">
+
+                        03
+
+                    </div>
+
+                    <h3>
+
+                        Share
+
+                    </h3>
+
+                    <p>
+
+                        Generate temporary secure links
+                        for downloads.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FEATURES -->
+
+        <section style="
+        margin-bottom:70px;
+        ">
+
+            <h2 style="
+            text-align:center;
+            margin-bottom:40px;
+            ">
+                Features
+            </h2>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <h3>
+
+                        AWS S3 Storage
+
+                    </h3>
+
+                    <p>
+
+                        Cloud-native storage
+                        with secure object management.
+
+                    </p>
+
+                </div>
+
+                <div class="feature-card">
+
+                    <h3>
+
+                        File Versioning
+
+                    </h3>
+
+                    <p>
+
+                        Maintain complete history
+                        of uploaded documents.
+
+                    </p>
+
+                </div>
+
+                <div class="feature-card">
+
+                    <h3>
+
+                        Secure Sharing
+
+                    </h3>
+
+                    <p>
+
+                        Generate expiring links
+                        using AWS presigned URLs.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TECH STACK -->
+
+        <section>
+
+            <div style="
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:24px;
+            padding:40px;
+            text-align:center;
+            ">
+
+                <h2 style="
+                margin-bottom:30px;
+                ">
+                    Built With
+                </h2>
+
+                <div style="
+                display:flex;
+                justify-content:center;
+                gap:20px;
+                flex-wrap:wrap;
+                ">
+
+                    <span class="tech-pill">
+
+                        Flask
+
+                    </span>
+
+                    <span class="tech-pill">
+
+                        AWS S3
+
+                    </span>
+
+                    <span class="tech-pill">
+
+                        SQLAlchemy
+
+                    </span>
+
+                    <span class="tech-pill">
+
+                        SQLite
+
+                    </span>
+
+                    <span class="tech-pill">
+
+                        Boto3
+
+                    </span>
+
+                    <span class="tech-pill">
+
+                        Flask Login
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+    <footer class="footer">
+
+        <p>
+            CloudVault • Personal Project by Bhavishya Garg
+        </p>
+
+        <p>
+            Developed during CodeC Technologies Cloud Internship
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

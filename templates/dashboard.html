@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>CloudVault</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- TOP BAR -->
+
+        <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:40px;
+        flex-wrap:wrap;
+        gap:20px;
+        ">
+
+            <div>
+
+                <h1 style="
+                color:var(--orange);
+                margin-bottom:6px;
+                ">
+                    CloudVault
+                </h1>
+
+                <p style="
+                color:var(--muted);
+                ">
+                    Versioned Cloud Storage
+                </p>
+
+            </div>
+
+            <div style="
+            display:flex;
+            gap:12px;
+            align-items:center;
+            flex-wrap:wrap;
+            ">
+
+                <form method="GET">
+
+                    <input type="text" name="search" value="{{ search }}" placeholder="Search files..."
+                        class="search-input">
+
+                </form>
+
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+        <div style="
+    margin-bottom:30px;
+    color:var(--muted);
+    ">
+
+            Welcome back,
+            <strong>
+                {{ user.username }}
+            </strong>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-success">
+            {{ messages[-1] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <!-- UPLOAD SECTION -->
+        <div class="upload-zone">
+
+            <div class="upload-content">
+
+                <h2>
+                    Upload New File
+                </h2>
+
+                <p>
+                    Store files securely and create automatic versions.
+                </p>
+
+                <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+
+                    <label for="fileInput" class="upload-label">
+                        Select File
+                    </label>
+
+                    <input id="fileInput" type="file" name="file" required hidden>
+
+                    <span id="fileName">
+                        No file selected
+                    </span>
+
+                    <br><br>
+
+                    <button type="submit">
+                        Upload File
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <script>
+
+            document
+                .getElementById("fileInput")
+                .addEventListener(
+                    "change",
+                    function () {
+
+                        const file =
+                            this.files[0]
+
+                        if (file) {
+
+                            document
+                                .getElementById(
+                                    "fileName"
+                                )
+                                .innerText =
+                                file.name
+
+                        }
+
+                    }
+                )
+
+        </script>
+
+        <!-- STORAGE INSIGHTS -->
+
+        <div style="
+        display:grid;
+        grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+        gap:15px;
+        margin-bottom:30px;
+        ">
+
+            <div class="info-card">
+
+                <h3>
+
+                    Files
+
+                </h3>
+
+                <span>
+
+                    {{ total_files }}
+
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>
+
+                    Versions
+
+                </h3>
+
+                <span>
+
+                    {{ total_versions }}
+
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>
+
+                    Storage
+
+                </h3>
+
+                <span>
+
+                    {{ storage_used }} MB
+
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>
+
+                    Latest
+
+                </h3>
+
+                <span>
+
+                    {{ latest_file }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- FILES -->
+
+        <div style="
+        background:var(--surface);
+        border-radius:24px;
+        padding:28px;
+        margin-bottom:30px;
+        ">
+
+            <h2 style="
+            margin-bottom:25px;
+            ">
+
+                Files
+
+            </h2>
+
+            {% if files %}
+
+            {% for file in files %}
+
+            {% set ext = file.filename.split('.')[-1].lower() %}
+
+            {% if ext == "pdf" %}
+            {% set icon = "📕" %}
+            {% elif ext in ["doc","docx"] %}
+            {% set icon = "📄" %}
+            {% elif ext in ["png","jpg","jpeg","gif","webp"] %}
+            {% set icon = "🖼️" %}
+            {% elif ext in ["xls","xlsx","csv"] %}
+            {% set icon = "📊" %}
+            {% elif ext in ["zip","rar","7z"] %}
+            {% set icon = "📦" %}
+            {% elif ext in ["txt"] %}
+            {% set icon = "📝" %}
+            {% else %}
+            {% set icon = "📁" %}
+            {% endif %}
+
+            <div style="
+                    border:1px solid var(--border);
+                    border-radius:18px;
+                    padding:20px;
+                    margin-bottom:15px;
+                    background:var(--surface-2);
+                    ">
+
+                <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        flex-wrap:wrap;
+                        gap:15px;
+                        ">
+
+                    <div>
+
+                        <div style="
+                                display:flex;
+                                align-items:center;
+                                gap:12px;
+                                ">
+
+                            <div style="display:flex;
+                            align-items:center;
+                            gap:12px;
+                            ">
+
+                                <span style="font-size:1.4rem;">
+                                    {{ icon }}
+                                </span>
+
+                                <span class="file-badge">
+                                    {{ ext.upper() }}
+                                </span>
+
+                            </div>
+
+                            <span style="
+                                    font-size:1.05rem;
+                                    font-weight:600;
+                                    ">
+
+                                {{ file.filename }}
+
+                            </span>
+
+                        </div>
+
+                        <p style="
+                                color:var(--muted);
+                                margin-top:10px;
+                                ">
+
+                            Version {{ file.version }}
+
+                            •
+
+                            {{ file.uploaded_at.strftime('%d %b %Y') }}
+
+                        </p>
+
+                    </div>
+
+                    <div style="
+                            display:flex;
+                            gap:10px;
+                            flex-wrap:wrap;
+                            ">
+
+                        <a href="{{ url_for('download_file', file_id=file.id) }}" class="action-btn">
+                            Download
+                        </a>
+
+                        <a href="{{ url_for('share_file', file_id=file.id) }}" class="action-btn">
+                            Share
+                        </a>
+
+                        <a href="{{ url_for('versions', filename=file.filename) }}" class="action-btn">
+                            Versions
+                        </a>
+
+                        <a href="{{ url_for('delete_file', file_id=file.id) }}" class="action-btn delete-btn">
+                            Delete
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <div style="
+                text-align:center;
+                padding:60px;
+                color:var(--muted);
+                ">
+
+                No files uploaded yet.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- ACTIVITY -->
+
+        <div style="
+        background:var(--surface);
+        border-radius:24px;
+        padding:28px;
+        ">
+
+            <h2 style="
+            margin-bottom:20px;
+            ">
+
+                Activity
+
+            </h2>
+
+            {% if activities %}
+
+            {% for activity in activities %}
+
+            <div style="
+                    padding:14px 0;
+                    border-bottom:1px solid var(--border);
+                    ">
+
+                {{ activity.action }}
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <p style="
+                color:var(--muted);
+                ">
+
+                No activity yet.
+
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
